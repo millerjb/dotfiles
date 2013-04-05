@@ -1,68 +1,42 @@
-# Mathias’s dotfiles
+# Jason's dotfiles.
 
-## Installation
+This repo contains my personal dotfiles and are heavily based on [paul](https://github.com/paulirish/dotfiles/) and [mathias](https://github.com/mathiasbynens/dotfiles/)'s.
 
-### Using Git and the bootstrap script
+## Some differences
 
-You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
+* Sublime 2 as a default editor
+* location support [see below]
 
-```bash
-git clone https://github.com/mathiasbynens/dotfiles.git && cd dotfiles && source bootstrap.sh
-```
+## install the neccessary apps
 
-To update, `cd` into your local `dotfiles` repository and then:
+My basic setup is captured in `install-deps.sh` which adds homebrew, z, nave, etc.
 
-```bash
-source bootstrap.sh
-```
+## private config
 
-Alternatively, to update while avoiding the confirmation prompt:
+Toss it into a file called `.extra` which you do not commit to this repo and just keep in your `~/`
 
-```bash
-set -- -f; source bootstrap.sh
-```
+I do some things with my `PATH`, global 'git' configuration, and other *private* exports and shortcuts.
 
-### Git-free install
+## location config
 
-To install these dotfiles without Git:
+I added some location capabilities to accomodate the differences between my work and home environments.
 
-```bash
-cd; curl -#L https://github.com/mathiasbynens/dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
-```
+You can set your locatioon in a couple ways:
 
-To update later on, just run that command again.
+* use `~/.location/setLocation.sh <location>` [*recommended*]
+* add `export LOCATION=<location>` to `~/.location/.current`
+* invoke `f_setLocation <location>` directly
 
-### Specify the `$PATH`
+You can also invoke `lsync`, which will update your environment based on the value stored in `/.current`.
 
-If `~/.path` exists, it will be sourced along with the other files, before any feature testing (such as [detecting which version of `ls` is being used](https://github.com/mathiasbynens/dotfiles/blob/aff769fd75225d8f2e481185a71d5e05b76002dc/.aliases#L21-26)) takes place.
+[Note: all this does it source `.<name>`]
 
-Here’s an example `~/.path` file that adds `~/utils` to the `$PATH`:
+`f_setLocation` will look for a `~/.location/.<name>` file, based off the value passed in. For example, you can add a `~/.location/.home` file to change your configuration at home.
 
-```bash
-export PATH="$HOME/utils:$PATH"
-```
+If no `.<file>` is available, `.default` will be used instead.
 
-### Add custom commands without creating a new fork
+If you want to automate your location switching, use something like [Control Plane](http://www.controlplaneapp.com/) to invoke a script (that updates `.current`, and then just invoke lsync from your terminal.
 
-If `~/.extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
-
-My `~/.extra` looks something like this:
-
-```bash
-# PATH additions
-export PATH="~/bin:$PATH"
-
-# Git credentials
-# Not in the repository, to prevent people from accidentally committing under my name
-GIT_AUTHOR_NAME="Mathias Bynens"
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-git config --global user.name "$GIT_AUTHOR_NAME"
-GIT_AUTHOR_EMAIL="mathias@mailinator.com"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-git config --global user.email "$GIT_AUTHOR_EMAIL"
-```
-
-You could also use `~/.extra` to override settings, functions and aliases from my dotfiles repository. It’s probably better to [fork this repository](https://github.com/mathiasbynens/dotfiles/fork_select) instead, though.
 
 ### Sensible OS X defaults
 
@@ -72,29 +46,45 @@ When setting up a new Mac, you may want to set some sensible OS X defaults:
 ./.osx
 ```
 
-### Install Homebrew formulae
+## Similar projects
 
-When setting up a new Mac, you may want to install some common Homebrew formulae (after installing Homebrew, of course):
+I recommend getting a [`.jshintrc`](https://github.com/jshint/node-jshint/blob/master/.jshintrc) and [`.editorconfig`](http://editorconfig.org/) defined for all your projects.
+
+
+## overview of files
+
+#### shell environement
+* `.aliases`
+* `.bash_profile`
+* `.bash_prompt`
+* `.bashrc`
+* `.exports`
+* `.functions`
+* `.extra` - not included, explained above
+* `.location` - location container
+	* `.current` - current location
+	* `.<name>` - location specific environment setup for `<name>`
+	
+
+#### manual run
+* `install-deps.sh` - random apps i need installed
+* `.osx` - run on a fresh osx machine
+* `.brew` - homebrew intialization
+
+#### git, brah
+* `.git`
+* `.gitattributes`
+* `.gitconfig`
+* `.gitignore`
+
+* `.inputrc` - config for bash readline
+
+
+
+## Installation
 
 ```bash
-./.brew
+git clone https://github.com/addyosmani/dotfiles.git && cd dotfiles && ./sync.sh
 ```
 
-## Feedback
-
-Suggestions/improvements
-[welcome](https://github.com/mathiasbynens/dotfiles/issues)!
-
-## Thanks to…
-
-* [Gianni Chiappetta](http://gf3.ca/) for sharing his [amazing collection of dotfiles](https://github.com/gf3/dotfiles)
-* [Matijs Brinkhuis](http://hotfusion.nl/) and his [dotfiles repository](https://github.com/matijs/dotfiles)
-* [Jan Moesen](http://jan.moesen.nu/) and his [ancient `.bash_profile`](https://gist.github.com/1156154) + [shiny _tilde_ repository](https://github.com/janmoesen/tilde)
-* [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)
-* [Nicolas Gallagher](http://nicolasgallagher.com/) and his [dotfiles repository](https://github.com/necolas/dotfiles)
-* [Tom Ryder](http://blog.sanctum.geek.nz/) and his [dotfiles repository](https://github.com/tejr/dotfiles)
-* [Chris Gerke](http://www.randomsquared.com/) and his [tutorial on creating an OS X SOE master image](http://chris-gerke.blogspot.com/2012/04/mac-osx-soe-master-image-day-7.html) + [_Insta_ repository](https://github.com/cgerke/Insta)
-* @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
-* [Lauri ‘Lri’ Ranta](http://lri.me/) for sharing [loads of hidden preferences](http://lri.me/osx.html#hidden-preferences)
-* [Tim Esselens](http://devel.datif.be/)
-* anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
+To update later on, just run the sync again.
