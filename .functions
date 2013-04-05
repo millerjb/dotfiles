@@ -66,11 +66,22 @@ function f_disableDebug() {
 	unset DEBUG
 }
 
-# Use Git’s colored diff when available
-hash git &>/dev/null
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --no-index --color-words "$@"
-	}
-fi
+# sync the current location
+function lsync() {
+	source ~/.location/.current 2>/dev/null
+	f_debug "Setting location: $LOCATION"
+	f_setLocation $LOCATION
+}
 
+# MASTER WRAPPER
+function f_setLocation() {
+	LOC=~/.location/.$1
+	if [ -f $LOC ] ;then
+			f_debug "Using $LOC"
+			source "$LOC" 2>/dev/null
+		else
+			f_debug "Could not find '$LOC'"
+			f_debug "Using .location_default"
+			source ~/.location/.default 2>/dev/null
+	fi
+}
