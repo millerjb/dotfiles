@@ -20,9 +20,11 @@ shopt -s cdspell
 complete -W "NSGlobalDomain" defaults
 
 # Autocomplete Grunt commands
-#which grunt > /dev/null && eval "$(grunt --completion=bash)"
+which grunt > /dev/null && eval "$(grunt --completion=bash)"
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
+
+complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
 
 lsync
