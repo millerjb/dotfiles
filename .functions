@@ -1,41 +1,4 @@
 
-# SET UP PROXIES
-function f_setProxies() {
-	if [ -n "$1" ] ;then
-    		f_debug "Setting proxies to $1"
-	        export HTTPS_PROXY="$1"
-			export HTTP_PROXY="$1"
-			export http_proxy="$1"
-		else
-			f_debug "Unsetting proxies"
-			unset HTTPS_PROXY
-			unset HTTP_PROXY
-			unset http_proxy
-    fi
-}
-
-# NPM CONFIG
-function f_resetNpmConfig() {
-	if f_isset npm ;then
-		f_debug "resetting npmrc config"
-		rm -rf ~/.npmrc
-	fi
-}
-
-function f_setNpmProxy() {
-	if f_isset npm ;then
-		f_debug "setting npm proxy to $1"
-		npm config set proxy $1 "$@" 2>/dev/null
-	fi
-}
-
-function f_setNpmRegistry() {
-	if f_isset npm ;then
-		f_debug "setting npm registry to $1"
-		npm config set registry $1 "$@" 2>/dev/null
-	fi
-}
-
 # check if a command exists
 function f_isset() {
 	type $1 &>/dev/null

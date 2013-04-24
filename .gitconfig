@@ -76,3 +76,6 @@
 
 [push]
 	default = simple
+[user]
+	name = Jason Miller
+	email = jason@millerjb.com
