@@ -340,6 +340,8 @@ defaults write com.apple.dashboard mcx-disabled -bool true
 defaults write com.apple.dock autohide-delay -float 0
 # Remove the animation when hiding/showing the Dock
 defaults write com.apple.dock autohide-time-modifier -float 0
+# Put the dock on the left
+defaults write com.apple.dock orientation -string left
 
 # Enable the 2D Dock
 #defaults write com.apple.dock no-glass -bool true
