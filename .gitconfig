@@ -1,28 +1,54 @@
 [alias]
+	##################
+	   # Not Used#
+	##################
 	# View the SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph
+	ls = log --pretty=oneline -n 20 --graph
 	# View the current working tree status using the short format
-	s = status -s
+	st = status -s
 	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git diff --patch-with-stat"
+	# d = !"git diff-index --quiet HEAD -- || clear; git diff --patch-with-stat"
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	# di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin master"
-	# Clone a repository including all submodules
-	c = clone --recursive
+	# p = !"git pull; git submodule foreach git pull origin master"
+	# Credit an author on the latest commit
+	# credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+	##################
+		# In Use#
+	##################
 	# Commit all changes
-	ca = !git add -A && git commit -av
+	ca = !git add --all && git commit -av
+	# Commit all and ammend to last commit
+	caa = commit --all --amend -C HEAD
+	# commit with fixup
+	caf = commit --all --fixup HEAD
+	# Checkout
+	co = checkout
 	# Switch to a branch, creating it if necessary
 	go = checkout -B
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# Stash PR
+	pr-stash = !sh -c 'stash pull-request $0'
+	# force push
+	fp = push --force
+	# rebase interactive
+	rbi = "!rbi() { git rebase --interactive ${1:-develop}; }; rbi"
+	# silently fixup all work in progress commits against develop or passed in branch
+	rba = "!rba() { EDITOR=: git rebase --interactive --autosquash ${1:-develop}; }; rba"
+
+	# commit all changes as "wip" or passed in commit message
+	wip = "!wip() { git commit --all -m \"${1:-wip}\";};wip"
+
+	rh = reset --hard
+	# usage: git rip | git rip master | git rip origin master
+	rip = "!rip() { if [ $# -eq 1 ] ; then b=$1 ; else r=$1; b=$2; fi; git reset --hard ${r:-upstream}/${b:-develop};};rip"
 
 [apply]
 	# Detect whitespace errors when applying a patch
@@ -34,7 +60,9 @@
 	attributesfile = ~/.gitattributes
 	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
 	whitespace = space-before-tab,indent-with-non-tab,trailing-space
-	editor = subl -a --wait
+	autocrlf = input
+	# editor = subl -a --wait
+	mergeoptions = --no-edit
 
 [color]
 	# Use colors in Git commands that are capable of colored output when outputting to the terminal
@@ -55,7 +83,7 @@
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
-	tool = diffmerge
+	tool = p4mergetool
 
 # Use `origin` as the default remote on the `master` branch in all cases
 [branch "master"]
@@ -75,6 +103,8 @@
 	pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
+[url "https://github.com"]
+	insteadOf = git://github.com
 
 [push]
 	default = simple
@@ -87,18 +117,17 @@
 	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
 [difftool "p4mergetool"]
 	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE\n
-[merge]
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
-	tool = p4mergetool
+	trustExitCode = true
 [mergetool]
 	keepBackup = false
 [mergetool "diffmerge"]
 	cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
-	trustExitCode = true
-	keepBackup = false
 [mergetool "p4mergetool"]
 	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
 	trustExitCode = false
 [credential]
 	helper = osxkeychain
+[rebase]
+	autosquash = true
+[rerere]
+	enabled = true
