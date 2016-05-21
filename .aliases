@@ -112,3 +112,6 @@ alias badge="tput bel"
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 	alias "$method"="lwp-request -m '$method'"
 done
+
+# mimic Unix md5sum for ant
+alias md5sum='md5 -r'

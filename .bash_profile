@@ -27,8 +27,19 @@ which grunt > /dev/null && eval "$(grunt --completion=bash)"
 
 complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
 
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
+  . $(brew --prefix)/share/bash-completion/bash_completion
 fi
 
-[[ -s ~/.nvm/nvm.sh ]] && . ~/.nvm/nvm.sh # This loads NVM
+if [ -d $(brew --prefix nvm) ]; then
+  export NVM_DIR=~/.nvm;
+  source $(brew --prefix nvm)/nvm.sh;
+fi
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# adds npm completion
+. <(npm completion)
+
+# fzf completion
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -6,6 +6,9 @@ brew update
 # Upgrade any already-installed formulae
 brew upgrade
 
+# Taps
+brew tap neovim/neovim
+
 # Install GNU core utilities (those that come with OS X are outdated)
 brew install coreutils
 echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
@@ -13,15 +16,30 @@ echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH.
 brew install findutils
 # Install Bash 4
 brew install bash
+brew install bash-completion2
+# Note: add /usr/local/bin/bash to /etc/shells and chsh -s /usr/local/bin/bash
+# otherwise bash-completion2 won't work properly (it will be picking up the system
+# version of bash).
 
 # Install wget with IRI support
 brew install wget --enable-iri
 
 # Install everything else
-brew install ack
 brew install git
-#brew install node
 brew install gnupg
+brew install vim
+# node version manager
+brew install nvm
+# download accelerator
+brew install axel
+# directory listings
+brew install tree
+# lightning fast code searches (better than ack)
+brew install the_silver_searcher
+# fuzzy searching
+brew install --HEAD fzf
+
+
 
 # Remove outdated versions from the cellar
 brew cleanup

@@ -20,8 +20,10 @@
 	##################
 	# Commit all changes
 	ca = !git add --all && git commit -av
-	# Commit all and ammend to last commit
+	# Commit all and amend to last commit
 	caa = commit --all --amend -C HEAD
+	# commit staged and amend to last commit 
+	csa = commit --amend -C HEAD
 	# commit with fixup
 	caf = commit --all --fixup HEAD
 	# Checkout
@@ -42,6 +44,9 @@
 	rbi = "!rbi() { git rebase --interactive ${1:-develop}; }; rbi"
 	# silently fixup all work in progress commits against develop or passed in branch
 	rba = "!rba() { EDITOR=: git rebase --interactive --autosquash ${1:-develop}; }; rba"
+	# clean up feature/fix/etc branches that have been merged to develop (or another specified branch)
+	bcl = "!bcl() { git branch --merged ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -d ; }; bcl"
+	bcla = "!bcla() { git branch ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -D; }; bcla"
 
 	# commit all changes as "wip" or passed in commit message
 	wip = "!wip() { git commit --all -m \"${1:-wip}\";};wip"
@@ -49,6 +54,9 @@
 	rh = reset --hard
 	# usage: git rip | git rip master | git rip origin master
 	rip = "!rip() { if [ $# -eq 1 ] ; then b=$1 ; else r=$1; b=$2; fi; git reset --hard ${r:-upstream}/${b:-develop};};rip"
+
+	# lines of code since a tag (or since the beginning of time)
+	#loc = "!loc() { git log --numstat --pretty=\"%H\" ${1:-} ${1:-} | awk 'NF==3 {plus+=\$1; minus+=\$2} END {printf(\"+%d, -%d\n\", plus, minus)}'; }; loc"
 
 [apply]
 	# Detect whitespace errors when applying a patch

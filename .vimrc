@@ -1,3 +1,8 @@
+call plug#begin('~/.vim/plugged')
+
+call plug#end()
+syntax enable
+colorscheme Tomorrow-Night
 " Make Vim more useful
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
@@ -25,6 +30,9 @@ set directory=~/.vim/swaps
 if exists("&undodir")
 	set undodir=~/.vim/undo
 endif
+
+" Don’t create backups when editing files in certain directories
+set backupskip=/tmp/*,/private/tmp/*
 
 " Respect modeline in files
 set modeline
@@ -68,12 +76,13 @@ set title
 " Show the (partial) command as it’s being typed
 set showcmd
 " Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
+set relativenumber
+au BufReadPost * set relativenumber
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
+" Enable fzf searching
+set rtp+=~/.fzf
+cabbrev fzf FZF
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -93,4 +102,6 @@ if has("autocmd")
 	filetype on
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+	" Treat .md files as Markdown
+	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
