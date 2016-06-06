@@ -55,6 +55,9 @@
 	# usage: git rip | git rip master | git rip origin master
 	rip = "!rip() { if [ $# -eq 1 ] ; then b=$1 ; else r=$1; b=$2; fi; git reset --hard ${r:-upstream}/${b:-develop};};rip"
 
+	# daemon shortcut
+	dd = daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose
+
 	# lines of code since a tag (or since the beginning of time)
 	#loc = "!loc() { git log --numstat --pretty=\"%H\" ${1:-} ${1:-} | awk 'NF==3 {plus+=\$1; minus+=\$2} END {printf(\"+%d, -%d\n\", plus, minus)}'; }; loc"
 
