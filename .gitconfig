@@ -19,34 +19,41 @@
 		# In Use#
 	##################
 	# Commit all changes
-	ca = !git add --all && git commit -av
-	# Commit all and amend to last commit
-	caa = commit --all --amend -C HEAD
-	# commit staged and amend to last commit 
-	csa = commit --amend -C HEAD
-	# commit with fixup
-	caf = commit --all --fixup HEAD
-	# Checkout
-	co = checkout
-	# Switch to a branch, creating it if necessary
-	go = checkout -B
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	# Stash PR
-	pr-stash = !sh -c 'stash pull-request $0'
-	# force push
-	fp = push --force
-	# rebase interactive
-	rbi = "!rbi() { git rebase --interactive ${1:-develop}; }; rbi"
-	# silently fixup all work in progress commits against develop or passed in branch
-	rba = "!rba() { EDITOR=: git rebase --interactive --autosquash ${1:-develop}; }; rba"
-	# clean up feature/fix/etc branches that have been merged to develop (or another specified branch)
-	bcl = "!bcl() { git branch --merged ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -d ; }; bcl"
-	bcla = "!bcla() { git branch ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -D; }; bcla"
+  ca = !git add --all && git commit -av
+  # Commit all and amend to last commit
+  caa = commit --all --amend -C HEAD
+  # commit staged and amend to last commit
+  csa = commit --amend -C HEAD
+  # commit with fixup
+  caf = commit --all --fixup HEAD
+  # Checkout
+  co = checkout
+  # Switch to a branch, creating it if necessary
+  go = checkout -B
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+  # Interactive rebase with the given number of latest commits
+  reb = "!r() { git rebase -i HEAD~$1; }; r"
+  # Stash PR
+  pr-stash = !sh -c 'stash pull-request $0'
+  # force push
+  fp = push --force
+  # rebase interactive
+  rbi = "!rbi() { git rebase --interactive ${1:-develop}; }; rbi"
+  # silently fixup all work in progress commits against develop or passed in branch
+  rba = "!rba() { EDITOR=: git rebase --interactive --autosquash ${1:-develop}; }; rba"
+  # clean up feature/fix/etc branches that have been merged to develop (or another specified branch)
+  bcl = "!bcl() { git branch --merged ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -d ; }; bcl"
+  # WARNING: very potent...
+  bclf = "!bcla() { git branch ${1:-} | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} | xargs -n 1 git branch -D; }; bcla"
+  # git bcr {branch} {remote} {pattern}
+  bcr = "!bcr() { git branch -r --merged ${1:-} | grep ${2:-upstream} | cut -d\"/\" -f2- | grep ${3:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|release'} | xargs -n 1 git push ${2:-upstream} --delete ; }; bcr"
+  # git bcra {branch} {remote} {pattern}
+  # WARNING: very potent...
+  bcrf = "!bcr() { git branch -r | grep ${1:-upstream} | cut -d\"/\" -f2- | grep ${2:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|release'} | xargs -n 1 git push ${1:-upstream} --delete ; }; bcr"
+  grep = "!grep() { grep ${1:-'fix\\|test\\|feat\\|refact\\|doc\\|style\\|chore\\|pull'} ; }; grep";
 
 	# commit all changes as "wip" or passed in commit message
 	wip = "!wip() { git commit --all -m \"${1:-wip}\";};wip"
