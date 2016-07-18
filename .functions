@@ -48,3 +48,7 @@ function f_setLocation() {
 			source ~/.location/.default 2>/dev/null
 	fi
 }
+
+function chrome() {
+	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome $* > /dev/null 2>&1 &
+}
