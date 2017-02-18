@@ -4,17 +4,16 @@
 default_username='jason'
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-	export TERM=gnome-256color
+  export TERM=gnome-256color
 elif infocmp xterm-256color >/dev/null 2>&1; then
-	export TERM=xterm-256color
+  export TERM=xterm-256color
 fi
 
 # Adjusted to Tomorrow Night theme
-MAGENTA=$(tput setaf 5)
-ORANGE=$(tput setaf 11)
-GREEN=$(tput setaf 2)
-PURPLE=$(tput setaf 5)
-WHITE=$(tput setaf 7)
+ORANGE="\e[38;5;222m"
+GREEN="\e[38;5;70m"
+PURPLE="\e[38;5;96m"
+WHITE="\e[38;5;253m"
 
 # Fastest possible way to check if repo is dirty. a savior for the WebKit repo.
 function parse_git_dirty() {
@@ -22,12 +21,12 @@ function parse_git_dirty() {
 }
 
 function parse_git_branch() {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
 # Only show username/host if not default
 function usernamehost() {
-	if [ $USER != $default_username ]; then echo "${PURPLE}$USER${WHITE} at ${ORANGE}$HOSTNAME $WHITEin "; fi
+  if [ $USER != $default_username ]; then echo "\[$PURPLE\]$USER\[$WHITE\] at \[$ORANGE\]$HOSTNAME \[$WHITE\]in "; fi
 }
 
 # iTerm Tab and Title Customization and prompt customization
@@ -41,4 +40,4 @@ function usernamehost() {
 # in the iterm tab
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
-PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\$(usernamehost)\[$ORANGE\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}$PURPLE$USER$WHITE at $ORANGE$HOSTNAME $WHITEin $ORANGE\w$WHITE\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")$PURPLE\$(parse_git_branch)$WHITE\n\$ \[$RESET\]"

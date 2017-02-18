@@ -21,13 +21,13 @@ complete -W "NSGlobalDomain" defaults
 
 complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
 
-if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
-  . $(brew --prefix)/share/bash-completion/bash_completion
+if [ -f '/usr/local/share/bash-completion/bash_completion' ]; then
+  . /usr/local/share/bash-completion/bash_completion
 fi
 
-if [ -d $(brew --prefix nvm) ]; then
+if [ -d '/usr/local/opt/nvm' ]; then
   export NVM_DIR=~/.nvm;
-  source /usr/local/opt/nvm/nvm.sh
+  source /usr/local/opt/nvm/nvm.sh;
 fi
 
 # adds npm completion
