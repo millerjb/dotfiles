@@ -2,6 +2,10 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'othree/yajs.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'fatih/vim-go'
 
 call plug#end()
 syntax enable
