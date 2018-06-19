@@ -35,4 +35,7 @@ fi
 
 # fzf completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 eval $(/usr/libexec/path_helper -s)
+
+export PATH="$PATH:$HOME/.yarn/bin"

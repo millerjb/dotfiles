@@ -40,6 +40,10 @@ brew install the_silver_searcher
 brew install --HEAD fzf
 brew install go
 
-
 # Remove outdated versions from the cellar
 brew cleanup
+
+# put brew first in path
+echo "Fixing path to have /usr/local/bin first"
+sudo sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
+sudo sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
