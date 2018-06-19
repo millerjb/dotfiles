@@ -38,7 +38,7 @@ brew install tree
 brew install the_silver_searcher
 # fuzzy searching
 brew install --HEAD fzf
-
+brew install go
 
 
 # Remove outdated versions from the cellar

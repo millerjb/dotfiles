@@ -1,0 +1,10 @@
+#!/bin/bash
+
+brew cask install visual-studio-code docker
+
+brew cask install evernote dropbox slack
+
+brew cask install sizeup alfred bartender caffeine
+
+brew cask install the-unarchiver
+
