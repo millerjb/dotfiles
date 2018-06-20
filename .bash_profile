@@ -39,3 +39,4 @@ fi
 eval $(/usr/libexec/path_helper -s)
 
 export PATH="$PATH:$HOME/.yarn/bin"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
