@@ -15,30 +15,15 @@ echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH.
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
 brew install findutils
 # Install Bash 4
-brew install bash
-brew install bash-completion2
-# Note: add /usr/local/bin/bash to /etc/shells and chsh -s /usr/local/bin/bash
-# otherwise bash-completion2 won't work properly (it will be picking up the system
-# version of bash).
+brew install bash bash-completion2
 
 # Install wget with IRI support
 brew install wget --enable-iri
 
 # Install everything else
-brew install git
-brew install gnupg
-brew install vim
-# node version manager
-brew install nvm
-# download accelerator
-brew install axel
-# directory listings
-brew install tree
-# lightning fast code searches (better than ack)
-brew install the_silver_searcher
-# fuzzy searching
-brew install --HEAD fzf
-brew install go
+brew install git gnupg vim nvm axel
+brew install tree the_silver_searcher fzf
+brew install go python@2
 
 # Remove outdated versions from the cellar
 brew cleanup
