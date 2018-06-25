@@ -1,6 +1,6 @@
 #!/bin/bash
 
-brew cask install visual-studio-code docker
+brew cask install visual-studio-code docker p4v
 
 brew cask install evernote dropbox slack
 
