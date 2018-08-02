@@ -24,6 +24,7 @@ brew install wget --enable-iri
 brew install git gnupg vim nvm axel
 brew install tree the_silver_searcher fzf
 brew install go python@2
+brew install adoptopenjdk-openjdk8
 
 # Remove outdated versions from the cellar
 brew cleanup
