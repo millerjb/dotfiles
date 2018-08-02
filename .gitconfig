@@ -68,6 +68,9 @@
 	# lines of code since a tag (or since the beginning of time)
 	# loc = "!loc() { git log --numstat --pretty=\"%H\" ${1:-} ${1:-} | awk 'NF==3 {plus+=\$1; minus+=\$2} END {printf(\"+%d, -%d\n\", plus, minus)}'; }; loc"
 
+	# tag w/ commit date
+	tagcd = "!tagd() { GIT_COMMITTER_DATE=\"$(git show --format=%aD  | head -1)\" git tag $@; }; tagd"
+
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
@@ -121,8 +124,8 @@
 	pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
-[url "https://github.com"]
-	insteadOf = git://github.com
+[url "git@github.com:logrhythm"]
+	insteadOf = https://github.com/logrhythm
 
 [push]
 	default = simple
