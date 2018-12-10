@@ -21,3 +21,5 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export GOPATH=~/go
 
 export JAVA_HOME=/usr/local/Cellar/adoptopenjdk-openjdk8/jdk8u172-b11
+
+export MY_EXTERNAL_IP=`ifconfig | grep -m 1 "inet 10.* netmask" | awk '{ print $2 }'`

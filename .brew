@@ -7,7 +7,7 @@ brew update
 brew upgrade
 
 # Taps
-brew tap neovim/neovim
+brew tap caskroom/cask
 
 # Install GNU core utilities (those that come with OS X are outdated)
 brew install coreutils
@@ -17,14 +17,54 @@ brew install findutils
 # Install Bash 4
 brew install bash bash-completion2
 
-# Install wget with IRI support
-brew install wget --enable-iri
+# Install essential tools
+brew install \
+axel \
+dos2unix \
+fzf \
+git \
+openssl \
+the_silver_searcher \
+tree \
+vim \
+wget --enable-iri
 
-# Install everything else
-brew install git gnupg vim nvm axel
-brew install tree the_silver_searcher fzf
-brew install go python@2
-brew install adoptopenjdk-openjdk8
+# Install development libraries
+brew cask install \
+adoptopenjdk-openjdk8 \
+glide \
+go \
+maven \
+python \
+python@2
+
+# Install IDEs
+brew cask install \
+adoptopenjdk-openjdk8 \
+docker \
+intellij-idea-ce \
+p4v \
+powershell \
+visual-studio-code
+
+# Install essential business apps
+brew cask install \
+dropbox \
+evernote \
+lastpass \
+slack \
+the-unarchiver
+
+# Install UI customizations
+brew cask install \
+alfred \
+bartender \
+caffeine \
+google-chrome \
+homebrew/cask-drivers/logitech-options \
+rcdefaultapp \
+sizeup \
+spectacle
 
 # Remove outdated versions from the cellar
 brew cleanup
@@ -33,3 +73,4 @@ brew cleanup
 echo "Fixing path to have /usr/local/bin first"
 sudo sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
 sudo sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
+
