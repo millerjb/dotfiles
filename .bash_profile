@@ -19,6 +19,12 @@ shopt -s cdspell
 # You could just use `-g` instead, but I like being explicit
 complete -W "NSGlobalDomain" defaults
 
+if [ ! -f "$HOME/.ssh/known_hosts" ]; then
+  echo "creating ~/.ssh/known_hosts"
+  mkdir ~/.ssh
+  touch ~/.ssh/known_hosts
+fi
+
 complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
 
 if [ -f '/usr/local/share/bash-completion/bash_completion' ]; then

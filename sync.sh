@@ -1,10 +1,12 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 function syncDotfiles() {
-	rsync --exclude ".git" --exclude ".DS_Store" --exclude "*.sh" --exclude "README.md" -a . ~
+	rsync --include ".bash*" --include ".git*" --exclude ".git" --include ".*rc" --include ".hushlogin" --include ".aliases" \
+	--include ".functions" --include ".exports" --include ".fzf.bash" --include ".vim" -a . ~
 }
 function testSyncDotfiles() {
-	rsync --exclude ".git" --exclude ".DS_Store" --exclude "*.sh" --exclude "README.md" -avn . ~
+	rsync --include ".bash*" --include ".git*" --exclude ".git" --include ".*rc" --include ".hushlogin" --include ".aliases" \
+	--include ".functions" --include ".exports" --include ".fzf.bash" --include ".vim" -avn . ~
 }
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	syncDotfiles

@@ -1,4 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `.osx` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+if which brew > /dev/null; then
+  echo "brew is installed"
+else
+  echo "brew not installed - installing"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 
 # Make sure we’re using the latest Homebrew
 brew update
@@ -16,6 +29,8 @@ echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH.
 brew install findutils
 # Install Bash 4
 brew install bash bash-completion2
+bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+chsh -s /usr/local/bin/bash
 
 # Install essential tools
 brew install \
@@ -30,17 +45,19 @@ vim \
 wget --enable-iri
 
 # Install development libraries
-brew cask install \
-adoptopenjdk-openjdk8 \
+brew install \
 glide \
 go \
 maven \
+nvm \
 python \
 python@2
 
+nvm install 8
+
 # Install IDEs
 brew cask install \
-adoptopenjdk-openjdk8 \
+adoptopenjdk \
 docker \
 intellij-idea-ce \
 p4v \
@@ -51,7 +68,6 @@ visual-studio-code
 brew cask install \
 dropbox \
 evernote \
-lastpass \
 slack \
 the-unarchiver
 
@@ -60,7 +76,6 @@ brew cask install \
 alfred \
 bartender \
 caffeine \
-google-chrome \
 homebrew/cask-drivers/logitech-options \
 rcdefaultapp \
 sizeup \
@@ -71,6 +86,6 @@ brew cleanup
 
 # put brew first in path
 echo "Fixing path to have /usr/local/bin first"
-sudo sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
-sudo sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
+sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
+sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
 
