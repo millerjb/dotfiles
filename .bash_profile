@@ -43,6 +43,8 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 eval $(/usr/libexec/path_helper -s)
+eval $(thefuck --alias hmb)
+export HISTIGNORE=hmb
 
 export PATH="$PATH:$HOME/.yarn/bin"
 export PATH="/usr/local/opt/openssl/bin:$PATH"

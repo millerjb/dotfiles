@@ -40,6 +40,7 @@ fzf \
 git \
 openssl \
 the_silver_searcher \
+thefuck \
 tree \
 vim \
 wget --enable-iri
@@ -69,6 +70,7 @@ brew cask install \
 dropbox \
 evernote \
 slack \
+spotify \
 the-unarchiver
 
 # Install UI customizations
