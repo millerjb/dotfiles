@@ -20,7 +20,6 @@ brew update
 brew upgrade
 
 # Taps
-brew tap caskroom/cask
 
 # Install GNU core utilities (those that come with OS X are outdated)
 brew install coreutils
@@ -39,11 +38,17 @@ dos2unix \
 fzf \
 git \
 openssl \
+ripgrep \
 the_silver_searcher \
 thefuck \
 tree \
 vim \
-wget --enable-iri
+wget \
+zsh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k ~/.powerlevel10k
+
 
 # Install development libraries
 brew install \
@@ -88,6 +93,6 @@ brew cleanup
 
 # put brew first in path
 echo "Fixing path to have /usr/local/bin first"
-sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
-sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
+sudo sed -i '' '/\/usr\/local\/bin/d' /private/etc/paths
+sudo sed -i '' '1s/^/\/usr\/local\/bin\'$'\n/' /private/etc/paths
 
